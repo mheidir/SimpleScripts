@@ -1,4 +1,4 @@
-# BASHScripts
+# SimpleScripts
 
 Contains a compilation of shell scripts used in Linux-based operating systems and product vendor specific separated into its own directories. Each of the script information is listed below with explanation to help understand the source code. Some codes are forked or located from web forums which are referenced as the source.
 
