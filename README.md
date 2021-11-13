@@ -30,7 +30,12 @@ This script was used to download blacklisted domains from KomInfo Indonesia and 
 ## EIP
 
 Contains **EfficientIP** specific shell scripts. These scripts were created in the year between 2020 till current. (*The scripts are pending compilation and will be uploaded soon*)
-
+- **kisa_sinkhole.sh**
+rsync a BIND configuration file containing forward zones and push into SOLIDserver via API. Meant to be executed via CRON
+- **snmpEipBIND.sh**
+Pulls list of values related to the BIND statistics from SOLIDServer v7.x
+- **snmpEipGuardian.sh**
+Pulls list of values related to the DNS Guardian statistics from SOLIDserver v7.x
 
 ## LICENSE
 
