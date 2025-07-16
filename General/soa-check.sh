@@ -17,7 +17,7 @@
 #
 # By: Muhammad Heidir
 # Date: 2025-07-11
-# Version: 1.0.0
+# Version: 1.0.1
 # Description: Compare SOA between Primary and Secondary DNS from a list of zones
 # Prerequisites: Zone list file must be in CSV format comprising of the following fields: zone, type, view
 
@@ -38,9 +38,9 @@ IFS=','
 COUNT=0
 TOTALCNT=0
 
-echo -e "Zone\t\t\t\t Primary:$PRIDNS\t Secondary:$SECDNS\t Result"
+printf "%-30s %6s\t\t %10s\t %10s\t Result\n" "Zone" "View" "P:$PRIDNS" "S:$SECDNS"
 
-while read -r zone type view
+while read -r zone type view zonescope authority signed
 do
 	TOTALCNT=$((TOTALCNT+1))
 	
@@ -62,10 +62,10 @@ do
 		fi
 		
 		if [[ "$PRI_SN" -eq "$SEC_SN" && "$SEC_SN" != *"REFUSED"* && "$SEC_SN" != *"SERVFAIL"* ]]; then
-			echo -e "$zone\t $PRI_SN\t\t\t $SEC_SN\t\t\t OK"
+			printf "%-30s\t %-10s\t %-10s\t\t %-10s\t\t OK\n" ${zone:0:30} $view $PRI_SN $SEC_SN 
 			echo "$zone,$PRI_SN,$SEC_SN,OK" >> $FILE_OUT
 		else
-			echo -e "$zone\t $PRI_SN\t\t\t $SEC_SN\t\t\t BAD"
+			printf "%-30s\t %-10s\t %-10s\t\t %-10s\t\t BAD\n" ${zone:0:30} $view $PRI_SN $SEC_SN 
 			echo "$zone,$PRI_SN,$SEC_SN,BAD" >> $FILE_OUT
 		fi		
 		
@@ -76,10 +76,10 @@ do
 		#fi
 	else
 		if [[ "$type" == *"Secondary"* ]]; then
-			echo -e "$zone\t SKIPPED\t\t\t SKIPPED\t\t\t BAD - Secondary Zone"
+			printf "%-30s\t %-10s\t %-10s\t\t %-10s\t\t BAD-Secondary Zone\n" ${zone:0:30} $view "SKIPPED" "SKIPPED" 
 			echo "$zone,SKIPPED,SKIPPED,BAD - Secondary Zone" >> $FILE_OUT
 		else
-			echo -e "$zone\t SKIPPED\t\t\t SKIPPED\t\t\t BAD - Check Configuration"
+			printf "%-30s\t %-10s\t %-10s\t\t %-10s\t\t BAD-Check Config\n" ${zone:0:30} $view "SKIPPED" "SKIPPED" 
 			echo "$zone,SKIPPED,SKIPPED,BAD - Check Configuration" >> $FILE_OUT
 		fi
 	fi
