@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DHCP LPS Estimator</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/dhcpcalculator.js" defer></script>
+
+    <style>
+        #number { width: 3em; }
+        #rightAlign { float: right; }
+        .selected { background-color: #87CEFA; }
+    </style>
+</head>
+<body style="margin:10px; padding:10px">
+    <!-- Section: DHCP Lease Estimator -->
+    <div class="container">
+        <h1>DHCP Lease Per Seconds Estimator</h1>
+        <p>This tool is to provide an estimate on the Leases Per Seconds based on the number of clients, lease time and expected growth values. The calculated LPS is a best guessed value to assist in sizing. <font color="orange"><br /><strong>NOTE:</strong> It is best to capture the accurate value from the existing production environment</font> to determine the required capacity.</p>
+    </div>
+    <form>
+        <!-- Number of Clients -->
+        <div class="container">
+            <div class="row">
+                <div class="col-2"><label for="numClients"><strong>Number of Clients:</strong></label></div>
+                <div class="col-sm"><input type="number" class="form-control" id="numClients" aria-describedby="clientHelp" min="1" maxlength="7" value="10000" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"></input></div>
+                <div class="col-md"><small id="clientHelp" class="form-text text-muted">Total number of clients using DHCP</small></div>
+            </div>
+        </div><br />
+        <!-- Projected Growth -->
+        <div class="container">
+            <div class="row">
+                <div class="col-2"><label for="projectedGrowth"><strong>Projected Growth:</strong></label></div>
+                <div class="col-md">
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="projectedGrowth" aria-describedby="growthHelp" min="0" max="100" size="3" maxlength="3" value="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon2">%</span></div>
+                        </input>
+                    </div>
+                </div>
+                <div class="col-sm"><small id="growthHelp" class="form-text text-muted">Estimated growth of clients in percentage</small></div>
+            </div>
+        </div><br />
+        <!-- Lease Duration -->
+        <div class="container">
+            <div class="row">
+                <div class="col-2"><label for="leaseDuration"><strong>Lease Duration:</strong></label></div>
+                <div class="col-md">
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="leaseHours" aria-describedby="leaseHoursHelp" min="0" max="24" size="2" maxlength="2" value="2" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon2">hrs</span></div>
+                        </input>&nbsp;
+                        <input type="number" class="form-control" id="leaseSeconds" placeholder="7200" readonly>
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon2">seconds</span></div>
+                        </input>
+                    </div>
+                </div>
+                <div class="col-sm"><small id="leaseHoursHelp" class="form-text text-muted">Lease time by number of hours and converted into seconds</small></div>
+            </div>
+        </div><br />
+        <!-- Renewal Interval -->
+        <div class="container">
+            <div class="row">
+                <div class="col-2"><label for="renewalInterval"><strong>Renewal Interval:</strong></label></div>
+                <div class="col-md">
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="renewalHours" aria-describedby="renewalIntervalHelp" placeholder="1" readonly>
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon2">hrs</span></div>
+                        </input>&nbsp;
+                        <input type="number" class="form-control" id="renewalSeconds" placeholder="3600" readonly>
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon2">seconds</span></div>
+                        </input>
+                    </div>
+                </div>
+                <div class="col-sm"><small id="renewalHoursHelp" class="form-text text-muted">Renewal interval(T1) at 50% lease time in hours and converted into seconds</small></div>
+            </div>
+        </div><br />
+        <!-- Average LPS without Growth-->
+        <div class="container">
+            <div class="row">
+                <div class="col-2"><label for="lpsNoGrowth"><strong><font color="green">Average LPS without Growth:</font></strong></label></div>
+                <div class="col-md">
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="lpsNoGrowth" aria-describedby="lpsNoGrowthHelp" placeholder="0" readonly>
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon2">LPS</span></div>
+                        </input>&nbsp;
+                    </div>
+                </div>
+                <div class="col-sm"><small id="lpsNoGrowthHelp" class="form-text text-muted">client / (lease duration / 2)</small></div>
+            </div>
+        </div><br />
+        <!-- Average LPS with Growth-->
+        <div class="container">
+            <div class="row">
+                <div class="col-2"><label for="lpsGrowth"><strong><font color="orange">Average LPS with Growth:</font></strong></label></div>
+                <div class="col-md">
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="lpsGrowth" aria-describedby="lpsGrowthHelp" placeholder="0" readonly>
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon2">LPS</span></div>
+                        </input>&nbsp;
+                    </div>
+                </div>
+                <div class="col-sm"><small id="lpsGrowthHelp" class="form-text text-muted">client + projected growth / (lease duration / 2)</small></div>
+            </div>
+        </div><br />
+        <!-- Peak LPS -->
+        <div class="container">
+            <div class="row">
+                <div class="col-2"><label for="peakLps"><strong><font color="red">Peak LPS:</font></strong></label></div>
+                <div class="col-md">
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="peakLps" aria-describedby="peakLpsHelp" placeholder="0" readonly>
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon2">LPS</span></div>
+                        </input>&nbsp;
+                    </div>
+                </div>
+                <div class="col-sm"><small id="peakLpsHelp" class="form-text text-muted">Peak LPS assumption at 1000%</small></div>
+            </div>
+        </div>
+    </form>
+    <hr />
+    
+    <!-- Section: DHCP Lease Spike Calculator -->
+    <div class="container">
+        <h1>DHCP Lease Spike Calculator</h1>
+    </div>
+    <form>
+    <!-- Number of Clients Spike -->
+        <div class="container">
+            <div class="row">
+                <div class="col-2"><label for="numSpikeClients"><strong>Number of Clients:</strong></label></div>
+                <div class="col-sm"><input type="number" class="form-control" id="numSpikeClients" aria-describedby="clientSpikeHelp" readonly></input></div>
+                <div class="col-md"><small id="clientSpikeHelp" class="form-text text-muted">Total number of clients using DHCP</small></div>
+            </div>
+        </div><br />
+        <!-- Spike Renewal -->
+        <div class="container">
+            <div class="row">
+                <div class="col-2"><label for="spikeRenewalPercentage"><strong>Spike Renewal (%):</strong></label></div>
+                <div class="col-md">
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="spikeRenewalPercentage" aria-describedby="spikeRenewalPercentageHelp" min="0" max="100" size="3" maxlength="3" value="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon2">%</span></div>
+                        </input>
+                    </div>
+                </div>
+                <div class="col-sm"><small id="spikeRenewalPercentageHelp" class="form-text text-muted">Percentage of clients performing DHCP renewals</small></div>
+            </div>
+        </div><br />
+        <!-- Spike Duration -->
+        <div class="container">
+            <div class="row">
+                <div class="col-2"><label for="spikeDuration"><strong>Spike Duration:</strong></label></div>
+                <div class="col-md">
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="spikeMinutes" aria-describedby="spikeDurationHelp" min="0" max="24" size="2" maxlength="2" value="0.5" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon2">minutes</span></div>
+                        </input>&nbsp;
+                        <input type="number" class="form-control" id="spikeSeconds" placeholder="7200" readonly>
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon2">seconds</span></div>
+                        </input>
+                    </div>
+                </div>
+                <div class="col-sm"><small id="spikeDurationHelp" class="form-text text-muted">Spike duration in minutes and seconds</small></div>
+            </div>
+        </div><br />
+        <!-- Spike LPS -->
+        <div class="container">
+            <div class="row">
+                <div class="col-2"><label for="spikeLps"><strong><font color="orange">Spike LPS:</font></strong></label></div>
+                <div class="col-md">
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="spikeLps" aria-describedby="spikeLpsHelp" placeholder="1" readonly>
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon2">LPS</span></div>
+                        </input>&nbsp;
+                    </div>
+                </div>
+                <div class="col-sm"><small id="spikeLpsHelp" class="form-text text-muted">Spike LPS assumption at 1000%</small></div>
+            </div>
+        </div><br />   
+    </form>
+    <br />
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted text-center">Copyright &copy; <script>document.write(new Date().getFullYear())</script>, SystemX</p>
+      </div>
+    </footer>
+</body>
+</html>
