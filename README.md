@@ -30,6 +30,7 @@ This script was used to download blacklisted domains from KomInfo Indonesia and 
 ## EIP
 
 Contains **EfficientIP** specific shell scripts. These scripts were created in the year between 2020 till current. (*The scripts are pending compilation and will be uploaded soon*)
+- **DHCP Lease Calculator** a simple tool to provide an estimation on the DHCP Leases Per Seconds based on the number of clients with projected growth showing average and peak LPS
 - **kisa_sinkhole.sh**
 rsync a BIND configuration file containing forward zones and push into SOLIDserver via API. Meant to be executed via CRON
 - **snmpEipBIND.sh**
