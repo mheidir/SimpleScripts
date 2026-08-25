@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Copyright (c) 2026, Your Name or Organization
+Copyright (c) 2026, Muhammad Heidir
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
