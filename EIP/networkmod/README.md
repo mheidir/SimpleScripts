@@ -37,6 +37,8 @@ Step-by-step instructions to get a development environment up and running.
 2. **Install dependencies**
    ```bash
    $ python3 -m venv networkmod
+   $ source ./networkmod/bin/activate
+   (networkmod)$ pip install requests
    ```
 
 3. **Configure environment variables**
