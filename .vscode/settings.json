@@ -1,0 +1,11 @@
+{
+    "rest-client.addRequestBodyLineIndentationAroundBrackets": true,
+    "rest-client.environmentVariables": {
+
+        "$shared": {
+            "x-ipm-username": "aXBtYWRtaW4=",
+            "x-ipm-password": "YWRtaW4="
+        }
+    },
+    "python-envs.defaultEnvManager": "ms-python.python:system"
+}

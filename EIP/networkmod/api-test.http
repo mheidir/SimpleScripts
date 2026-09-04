@@ -1,0 +1,112 @@
+@BASE_URL=https://192.168.8.11/rest
+
+GET {{BASE_URL}}/ip_site_list?WHERE=site_name='API-Tests'
+User-Agent: rest-client
+Content-Type: application/json
+X-IPM-Username:{{x-ipm-username}}
+X-IPM-Password:{{x-ipm-password}}
+
+###
+
+GET {{BASE_URL}}/ip_site_info?site_id=9
+User-Agent: rest-client
+Content-Type: application/json
+X-IPM-Username:{{x-ipm-username}}
+X-IPM-Password:{{x-ipm-password}}
+
+###
+
+GET {{BASE_URL}}/ip_block_subnet_list?WHERE=start_hostaddr='192.168.5.0'%20AND%20site_name='API-Tests'
+User-Agent: rest-client
+Content-Type: application/json
+X-IPM-Username:{{x-ipm-username}}
+X-IPM-Password:{{x-ipm-password}}
+
+###
+
+GET {{BASE_URL}}/ip_block_subnet_info?subnet_id=192&TAGS=network.gateway
+User-Agent: rest-client
+Content-Type: application/json
+X-IPM-Username:{{x-ipm-username}}
+X-IPM-Password:{{x-ipm-password}}
+
+###
+
+GET {{BASE_URL}}/ip_pool_list?WHERE=site_name='API-Tests'%20AND%20subnet_id='195'
+User-Agent: rest-client
+Content-Type: application/json
+X-IPM-Username:{{x-ipm-username}}
+X-IPM-Password:{{x-ipm-password}}
+
+###
+
+GET {{BASE_URL}}/ip_pool_info?pool_id=43
+User-Agent: rest-client
+Content-Type: application/json
+X-IPM-Username:{{x-ipm-username}}
+X-IPM-Password:{{x-ipm-password}}
+
+###
+
+#GET {{BASE_URL}}/dhcp_scope_list?WHERE=dhcpscope_net_addr='192.168.11.0'%20AND%20dhcpscope_site_name='API-Tests'
+GET {{BASE_URL}}/dhcp_scope_list?WHERE=dhcpscope_net_addr%3D%27192.168.5.0%27+AND+dhcpscope_site_name%3D%27API-Tests%27
+User-Agent: rest-client
+Content-Type: application/json
+X-IPM-Username:{{x-ipm-username}}
+X-IPM-Password:{{x-ipm-password}}
+
+###
+
+GET {{BASE_URL}}/dhcp_server_options_list?WHERE=dhcp_name='smart.api.eiplab.corp'
+User-Agent: rest-client
+Content-Type: application/json
+X-IPM-Username:{{x-ipm-username}}
+X-IPM-Password:{{x-ipm-password}}
+
+###
+
+GET {{BASE_URL}}/dhcp_scope_list?WHERE=dhcpscope_net_addr='192.168.5.0'%20AND%20dhcp_name='smart.api.eiplab.corp'
+User-Agent: rest-client
+Content-Type: application/json
+X-IPM-Username:{{x-ipm-username}}
+X-IPM-Password:{{x-ipm-password}}
+
+###
+
+GET {{BASE_URL}}/dhcp_scope_options_list?dhcpscope_id=82
+User-Agent: rest-client
+Content-Type: application/json
+X-IPM-Username:{{x-ipm-username}}
+X-IPM-Password:{{x-ipm-password}}
+
+###
+
+GET {{BASE_URL}}/dhcp_option_add
+User-Agent: rest-client
+Content-Type: application/json
+X-IPM-Username:{{x-ipm-username}}
+X-IPM-Password:{{x-ipm-password}}
+
+###
+
+GET {{BASE_URL}}/dhcp_range_list?WHERE=dhcprange_id=57
+User-Agent: rest-client
+Content-Type: application/json
+X-IPM-Username:{{x-ipm-username}}
+X-IPM-Password:{{x-ipm-password}}
+
+###
+
+GET {{BASE_URL}}/ip_pool_list?WHERE=site_name='API-Tests'%20AND%20subnet_id='195'
+User-Agent: rest-client
+Content-Type: application/json
+X-IPM-Username:{{x-ipm-username}}
+X-IPM-Password:{{x-ipm-password}}
+
+###
+
+GET {{BASE_URL}}/ip_block_subnet_list?WHERE=site_name='API-Tests'%20AND%20start_hostaddr='192.168.5.0'
+User-Agent: rest-client
+Content-Type: application/json
+X-IPM-Username:{{x-ipm-username}}
+X-IPM-Password:{{x-ipm-password}}
