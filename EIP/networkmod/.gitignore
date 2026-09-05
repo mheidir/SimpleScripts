@@ -1,0 +1,5 @@
+networkmod/
+api-test.http
+sds.conf
+*.csv
+.DS_Store
