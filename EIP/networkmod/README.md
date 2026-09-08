@@ -1,4 +1,4 @@
-# Auto Populate GSLB Server Nodes from FQDN
+# Network Modification Scripts (Router/Gateway (option 3), Domain Name Servers (option 6), DHCP Range )
 
 [![License](https://img.shields.io/badge/License-BSD_3_Clause-lightgrey)](https://opensource.org/license/bsd-3-clause)
 [![GitHub release](https://img.shields.io/badge/Github-mheidir:_SimpleScripts-blue?logo=github)](https://github.com/mheidir/SimpleScripts)
