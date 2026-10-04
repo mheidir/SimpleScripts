@@ -15,6 +15,9 @@ To list down all user accounts that has already expired
 To create a new user account specifying the expiration date after N-days
 - **useradd_expire.sh**
 To create a new user account specifying the date when the account should expire
+- **soa-check.sh**
+Compare SOA between Primary and Secondary DNS from a list of zones
+
 
 
 ## BCN
