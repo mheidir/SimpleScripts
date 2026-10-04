@@ -53,7 +53,7 @@ Make sure to have all the required libraries
 $ source ./qrcode-gen/bin/activate
 
 # Run the application
-(autofqdn)$ python3 ./qrcode-genURL.py "https://www.example.com" myqrcode.png
+(qrcode-gen)$ python3 ./qrcode-genURL.py "https://www.example.com" myqrcode.png
 
 # Sample Output
 [INFO] URL retrieved: https://www.example.com
