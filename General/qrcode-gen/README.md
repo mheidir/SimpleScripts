@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/License-BSD_3_Clause-lightgrey)](https://opensource.org/license/bsd-3-clause)
 [![GitHub release](https://img.shields.io/badge/Github-mheidir:_SimpleScripts-blue?logo=github)](https://github.com/mheidir/SimpleScripts)
 [![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff)](#)
-[![EfficientIP SOLIDserver](https://img.shields.io/badge/QRCode:Generator)](#)
+[![QRCode Generator](https://img.shields.io/badge/QRCode_Generator-blue)](#)
 
 These set of scripts helps to generate QR Codes that do not contain any link to a site full of advertisements. It will generate the QR Code based on the type of date you provide. At this moment, I am providing 3 methods:
 1. Generate based on URL
